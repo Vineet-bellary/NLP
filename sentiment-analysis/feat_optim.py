@@ -1,9 +1,10 @@
 from pathlib import Path
 import joblib
+import config
 
-MODEL_DIR = Path("models").resolve()
+MODEL_DIR = config.MODEL_DIR
 
-saved = joblib.load(MODEL_DIR / "sentiment_analysis_model.pkl")
+saved = joblib.load(MODEL_DIR / config.MODEL_NAME)
 vectorizer = saved["vectorizer"]
 model = saved["model"]
 

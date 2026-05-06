@@ -2,9 +2,10 @@ import joblib
 from pathlib import Path
 
 from util.preprocessing import preprocess_text
+import config
 
-MODEL_DIR_PATH = Path(__file__).resolve().parent / "models"
-MODEL_NAME = "sentiment_analysis_model.pkl"
+MODEL_DIR_PATH = config.MODEL_DIR
+MODEL_NAME = config.MODEL_NAME
 
 load = joblib.load(MODEL_DIR_PATH / MODEL_NAME)
 
@@ -19,5 +20,5 @@ x_test = vectorizer.transform([x_test_cleaned])
 
 y = model.predict(x_test)
 
-print(f"Review: {x_test_raw}")
-print(f"Predicted Label: {y[0]}")
+print(f"{'Review:':>16} {x_test_raw}")
+print(f"{'Predicted Label:':>16} {y[0]}")
