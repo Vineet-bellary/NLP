@@ -25,12 +25,3 @@ def get_confusion_matrix(y_test, y_pred):
     print(f"{'Actual: negative|':<20}{cm[0][0]:<15}{cm[0][1]:<15}")
     print(f"{'Actual: positive|':<20}{cm[1][0]:<15}{cm[1][1]:<15}")
     print("=" * 60)
-
-
-def feature_importance(vectorizer, top_n=20):
-    feature_names = vectorizer.get_feature_names_out()
-    print("\nTop Feature Importances:")
-    print("=" * 60)
-    for i, feature in enumerate(feature_names[:top_n]):
-        print(f"{i + 1}. {feature}")
-    print("=" * 60)

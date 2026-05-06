@@ -1,26 +1,31 @@
 from pathlib import Path
-import string
+import joblib
 
-from util.eval import feature_importance
-from util.preprocessing import preprocess_pipeline
-from util.vectorizer import vectorize_texts
+MODEL_DIR = Path("models").resolve()
 
-DIR_DATA = Path("data").resolve()
-MODEL_DIR = Path("model").resolve()
-DATA_FILE = DIR_DATA / "IMDB_dataset.csv"
+saved = joblib.load(MODEL_DIR / "sentiment_analysis_model.pkl")
+vectorizer = saved["vectorizer"]
+model = saved["model"]
 
-sentiment_analysis = preprocess_pipeline(DATA_FILE)
 
-if sentiment_analysis is not None and sentiment_analysis.empty is False:
-    print("Data loaded successfully....")
-    print(sentiment_analysis.head(10))
-else:
-    print("Data loading failed. Exiting.")
-    exit(1)
+def feature_importance(vectorizer, model, top_n=20):
+    feature_names = vectorizer.get_feature_names_out()
+    coefs = model.coef_[0]
+    top_positive = coefs.argsort()[-top_n:]
+    top_negative = coefs.argsort()[:top_n]
 
-vectorizer, x_train, x_test, y_train, y_test = vectorize_texts(sentiment_analysis)
+    print("\nTop Positive Features:")
+    print("=" * 60)
+    for i in top_positive:
+        print(f"{feature_names[i]}: {coefs[i]:.4f}")
+    print("=" * 60)
 
-feature_importance(vectorizer, 10)
+    print("\nTop Negative Features:")
+    print("=" * 60)
+    for i in top_negative:
+        print(f"{feature_names[i]}: {coefs[i]:.4f}")
+    print("=" * 60)
 
-# punctuation = string.punctuation
-# print("Punctuation characters:", punctuation)
+
+top_n = 10
+feature_importance(vectorizer, model, top_n)
