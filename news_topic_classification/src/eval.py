@@ -1,6 +1,6 @@
 import config
 import joblib
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 from util.data_prep import prepare_data
 from util.logger import setup_logging
@@ -34,6 +34,9 @@ def evaluate_model():
         "\n"
         + classification_report(y_test, y_pred, target_names=config.CLASS_MAP.values())
     )
+
+    logger.info("Confusion Matrix:")
+    logger.info("\n" + str(confusion_matrix(y_test, y_pred)))
 
 
 def main():
