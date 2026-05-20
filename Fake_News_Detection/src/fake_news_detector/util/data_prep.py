@@ -21,3 +21,12 @@ def split_data(df):
     )
 
     return x_train, x_test, y_train, y_test
+
+
+def prepare_dataset() -> tuple:
+    df = data_preparation()
+    x_train, x_test, y_train, y_test = split_data(df)
+
+    # x_train_vec, x_test_vec, vectorizer = vectorize_data(x_train, x_test)
+
+    return x_train, x_test, y_train, y_test
