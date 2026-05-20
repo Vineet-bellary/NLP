@@ -8,6 +8,9 @@ MODELS_DIR = BASE_DIR / "models"
 LOGS_DIR = BASE_DIR / "logs"
 REPORTS_DIR = BASE_DIR / "reports"
 
+# Model names
+LOGISTIC_REGRESSION_MODEL = "fake_news_lr.joblib"
+
 
 # Dataset paths
 TRAIN_DATA_PATH = DATA_DIR / "train.csv"
@@ -21,3 +24,8 @@ NGRAM_RANGE = (1, 2)
 
 # Test train split
 TEST_SIZE = 0.2
+
+CLASS_MAP = {
+    0: "Real News",
+    1: "Fake News",
+}
